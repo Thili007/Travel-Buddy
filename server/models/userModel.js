@@ -33,7 +33,7 @@ userModel.statics.signup = async function (userName, email, password) {
   if (!validator.isEmail(email)) {
     throw Error("Email must be a valid email");
   }
-  if (!validator.isPassword(password)) {
+  if (!validator.isStrongPassword(password)) {
     throw Error("Password must be Strong");
   }
 
@@ -52,15 +52,15 @@ userModel.statics.signup = async function (userName, email, password) {
 
 // userModel login methods
 
-userModel.statics.login = async function (userName, password) {
+userModel.statics.login = async function (user, password) {
   // validations
 
-  if (!userName || !password) {
+  if (!user || !password) {
     throw Error("All fields must be filled");
   }
 
   const userFind = await this.findOne({
-    $or: [{ userName: userName }, { email: userName }],
+    $or: [{ userName: user }, { email: user }],
   });
 
   if (!userFind) {
