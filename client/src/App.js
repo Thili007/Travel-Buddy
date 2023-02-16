@@ -1,5 +1,4 @@
 import "./App.css";
-
 import Navbar from "./components/Navbar";
 import PostCard from "./components/PostCard";
 
