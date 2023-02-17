@@ -16,50 +16,61 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import WifiOffIcon from "@mui/icons-material/WifiOff";
 import { red } from "@mui/material/colors";
+import { useState } from "react";
+import { useLogout } from "../hooks/useLogout";
+import { useUserContext } from "../hooks/useUserContext";
+import { Link } from "react-router-dom";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
+// const Search = styled("div")(({ theme }) => ({
+// position: "relative",
+// borderRadius: theme.shape.borderRadius,
+// backgroundColor: alpha(theme.palette.common.white, 0.15),
+// "&:hover": {
+// backgroundColor: alpha(theme.palette.common.white, 0.25),
+// },
+// marginRight: theme.spacing(2),
+// marginLeft: 0,
+// width: "100%",
+// [theme.breakpoints.up("sm")]: {
+// marginLeft: theme.spacing(3),
+// width: "auto",
+// },
+// }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
+// const SearchIconWrapper = styled("div")(({ theme }) => ({
+// padding: theme.spacing(0, 2),
+// height: "100%",
+// position: "absolute",
+// pointerEvents: "none",
+// display: "flex",
+// alignItems: "center",
+// justifyContent: "center",
+// }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
+// const StyledInputBase = styled(InputBase)(({ theme }) => ({
+// color: "inherit",
+// "& .MuiInputBase-input": {
+// padding: theme.spacing(1, 1, 1, 0),
+// vertical padding + font size from searchIcon
+// paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+// transition: theme.transitions.create("width"),
+// width: "100%",
+// [theme.breakpoints.up("md")]: {
+// width: "20ch",
+// },
+// },
+// }));
 
-export default function PrimarySearchAppBar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+export const Navbar = () => {
+  const { logout } = useLogout();
+  const { user } = useUserContext();
+
+  const logOutHandler = () => {
+    logout();
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -201,7 +212,7 @@ export default function PrimarySearchAppBar() {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={9} color="error">
+              <Badge badgeContent={7} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -217,22 +228,22 @@ export default function PrimarySearchAppBar() {
               <AccountCircle />
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-          </Box>
+          {user && (
+            <div>
+              <span>{user.userName}</span>
+              <button onClick={logOutHandler}>Log Out</button>
+            </div>
+          )}
+          {!user && (
+            <div>
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Signup</Link>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
     </Box>
   );
-}
+};
