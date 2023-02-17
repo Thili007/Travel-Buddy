@@ -52,15 +52,15 @@ userModel.statics.signup = async function (userName, email, password) {
 
 // userModel login methods
 
-userModel.statics.login = async function (user, password) {
+userModel.statics.login = async function (userName, password) {
   // validations
 
-  if (!user || !password) {
+  if (!userName || !password) {
     throw Error("All fields must be filled");
   }
 
   const userFind = await this.findOne({
-    $or: [{ userName: user }, { email: user }],
+    $or: [{ userName: userName }, { email: userName }],
   });
 
   if (!userFind) {

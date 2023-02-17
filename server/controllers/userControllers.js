@@ -8,13 +8,13 @@ const createToken = (_id) => {
 // Login controller
 
 const loginUser = async (req, res) => {
-  const { user, password } = req.body;
+  const { userName, password } = req.body;
 
   try {
-    const userDetails = await User.login(user, password);
+    const userDetails = await User.login(userName, password);
     const token = createToken(userDetails._id);
 
-    res.status(200).json({ user, token });
+    res.status(200).json({ userName, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
