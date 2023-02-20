@@ -5,12 +5,12 @@ function Profile() {
   return (
     <div className="profilePage">
       <div className=" about-me">
-        <div className="container w-[100%]  my-20 ">
+        <div className="container w-[100%]  mt-20 mb-4">
           <div>
-            <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-6/6 xl:w-6/6 mx-auto">
+            <div className="bg-white relative shadow rounded-lg w-6/6 md:w-6/6  lg:w-6/6 xl:w-5/6 mx-auto">
               <div className="flex justify-center">
                 <img
-                  src="https://avatars0.githubusercontent.com/u/35900628?v=4"
+                  src="https://i.scdn.co/image/ab67616d0000b273645a644e909dc1bb2aaae02d"
                   alt=""
                   className="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110"
                 />
@@ -18,7 +18,7 @@ function Profile() {
 
               <div className="mt-16">
                 <h1 className="font-bold text-center text-3xl text-gray-900">
-                  Pantazi Software
+                  Behnam
                 </h1>
                 <p className="text-center text-sm text-gray-400 font-medium">
                   UI Components Factory
