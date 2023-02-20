@@ -80,7 +80,11 @@ export default function PostCard({ post }) {
           </Avatar>)()
         }
         action={
-          <IconButton aria-label="settings" onClick={null}>
+          <IconButton
+            aria-label="settings"
+            onClick={null}
+            className="iconButton"
+          >
             <MoreVertIcon
               id="basic-button"
               aria-controls={open ? "basic-menu" : undefined}
