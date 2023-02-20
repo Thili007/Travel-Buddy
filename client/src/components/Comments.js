@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button, Comment, Form, Header } from "semantic-ui-react";
 
 const Comments = () => (
@@ -19,8 +20,8 @@ const Comments = () => (
         </Comment.Metadata>
         <Comment.Text>How artistic!</Comment.Text>
         <Comment.Actions>
-          <a>Like</a>
-          <a>Reply</a>
+          <Link>Like</Link>
+          <Link>Reply</Link>
         </Comment.Actions>
       </Comment.Content>
     </Comment>
@@ -39,8 +40,8 @@ const Comments = () => (
           <p>This has been very useful for my research. Thanks as well!</p>
         </Comment.Text>
         <Comment.Actions>
-          <a>Like</a>
-          <a>Reply</a>{" "}
+          <Link>Like</Link>
+          <Link>Reply</Link>
         </Comment.Actions>
       </Comment.Content>
 
@@ -57,8 +58,8 @@ const Comments = () => (
             </Comment.Metadata>
             <Comment.Text>Elliot you are always so right :)</Comment.Text>
             <Comment.Actions>
-              <a>Like</a>
-              <a>Reply</a>{" "}
+              <Link>Like</Link>
+              <Link>Reply</Link>
             </Comment.Actions>
           </Comment.Content>
         </Comment>
@@ -78,7 +79,7 @@ const Comments = () => (
         <Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
         <Comment.Actions>
           <a>Like</a>
-          <a>Reply</a>{" "}
+          <a>Reply</a>
         </Comment.Actions>
       </Comment.Content>
     </Comment>

@@ -19,7 +19,6 @@ import { useLogout } from "../hooks/useLogout";
 import { useUserContext } from "../hooks/useUserContext";
 import { Link } from "react-router-dom";
 
-
 // const Search = styled("div")(({ theme }) => ({
 // position: "relative",
 // borderRadius: theme.shape.borderRadius,
@@ -70,7 +69,6 @@ export const Navbar = () => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -199,7 +197,7 @@ export const Navbar = () => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              {user?.userName.charAt(0)}
             </IconButton>
           </Box>
           {user && (
