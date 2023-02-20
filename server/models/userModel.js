@@ -33,7 +33,7 @@ userModel.statics.signup = async function (userName, email, password) {
   if (!validator.isEmail(email)) {
     throw Error("Email must be a valid email");
   }
-  if (!validator.isPassword(password)) {
+  if (!validator.isStrongPassword(password)) {
     throw Error("Password must be Strong");
   }
 
