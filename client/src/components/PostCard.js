@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useRef, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -15,7 +15,7 @@ import CommentIcon from "@mui/icons-material/Comment";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button, Form, Ref } from "semantic-ui-react";
-import { useRef, useState, useContext } from "react";
+
 import Badge from "@mui/material/Badge";
 import Popover from "./Popover";
 import Comments from "./Comments";
@@ -86,15 +86,15 @@ export default function PostCard({ post }) {
               aria-controls={open ? "basic-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            />
-            <Popover
-              anchorEl={anchorEl}
-              setAnchorEl={setAnchorEl}
-              open={open}
-              handleClick={handleClick}
-              handleClose={handleClose}
-            />
+            >
+              <Popover
+                anchorEl={anchorEl}
+                setAnchorEl={setAnchorEl}
+                open={open}
+                handleClick={handleClick}
+                handleClose={handleClose}
+              />
+            </MoreVertIcon>
           </IconButton>
         }
         title={post?.title || "Post Title"}
@@ -117,8 +117,8 @@ export default function PostCard({ post }) {
             <FavoriteIcon />
           </StyledBadge>
         </IconButton>
-        <IconButton aria-label="comment">
-          <CommentIcon onClick={handleCommentClick} />
+        <IconButton aria-label="comment" onClick={handleCommentClick}>
+          <CommentIcon />
         </IconButton>
         <ExpandMore
           expand={expanded}
