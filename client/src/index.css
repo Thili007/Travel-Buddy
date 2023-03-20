@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap");
 * {
   padding: 0;
   margin: 0;

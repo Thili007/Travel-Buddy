@@ -1,8 +1,0 @@
-.postCard {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid red;
-  max-width: 900px;
-  height: fit-content;
-  margin: 20px auto;
-}
