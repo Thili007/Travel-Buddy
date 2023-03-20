@@ -8,7 +8,6 @@ const SignUp = () => {
 
   const { signUp, isLoading, error } = useSignup();
 
-  console.log(userName, email, password);
   const handelSubmit = async (e) => {
     e.preventDefault();
     await signUp(userName, email, password);

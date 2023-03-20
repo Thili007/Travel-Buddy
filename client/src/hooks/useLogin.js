@@ -3,6 +3,7 @@ import { useUserContext } from "./useUserContext";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
+
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useUserContext();
 
@@ -26,11 +27,9 @@ export const useLogin = () => {
 
     if (response.ok) {
       //Storing the user in Local Storage
-
       localStorage.setItem("user", JSON.stringify(json));
 
       // Update the UserContext
-
       dispatch({ type: "LOGIN", payload: json });
       setIsLoading(false);
     }

@@ -1,29 +1,48 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const validator = require("validator");
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import validator from "validator";
 
 const Schema = mongoose.Schema;
 
-const userModel = new Schema({
-  userName: {
-    type: "string",
-    required: true,
-    unique: true,
+const UserModel = new Schema(
+  {
+    userName: {
+      type: "string",
+      required: true,
+      unique: true,
+    },
+    email: {
+      type: "string",
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: "string",
+      required: true,
+    },
+    firstName: {
+      type: "string",
+    },
+    lastName: {
+      type: "string",
+    },
+    gender: {
+      type: "string",
+    },
+    profilePicture: {
+      type: "string",
+      default: "",
+    },
+
+    posts: [{ type: mongoose.Types.ObjectId, ref: "PostModel" }],
+    trips: [{ type: mongoose.Types.ObjectId, ref: "TripPlanModel" }],
   },
-  email: {
-    type: "string",
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: "string",
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 
 // static signup methods
 
-userModel.statics.signup = async function (userName, email, password) {
+UserModel.statics.signup = async function (userName, email, password) {
   // Validations
 
   if (!userName || !email || !password) {
@@ -52,7 +71,7 @@ userModel.statics.signup = async function (userName, email, password) {
 
 // userModel login methods
 
-userModel.statics.login = async function (userName, password) {
+UserModel.statics.login = async function (userName, password) {
   // validations
 
   if (!userName || !password) {
@@ -75,4 +94,5 @@ userModel.statics.login = async function (userName, password) {
   return userFind;
 };
 
-module.exports = mongoose.model("UserData", userModel);
+const UserData = mongoose.model("UserData", UserModel);
+export default UserData;

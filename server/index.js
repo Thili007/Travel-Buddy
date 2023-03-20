@@ -1,28 +1,44 @@
-require("dotenv").config();
+import dotenv from "dotenv";
 
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const userRoutes = require("./routes/user");
+import express from "express";
+import mongoose from "mongoose";
+import helmet from "helmet";
+import morgan from "morgan";
+import cors from "cors";
+import userRoutes from "./routes/userRoutes.js";
+import postsRoutes from "./routes/postsRoutes.js";
+import tripRoutes from "./routes/tripsRoutes.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Configuration
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config();
 
 const app = express();
 
-app.use(cors());
-
 // Middleware
-app.use(express.json());
-app.use(function (req, res, next) {
-  next();
-});
+app.use(express.json({ limit: "30mb", extended: true }));
+app.use(express.urlencoded({ limit: "30mb", extended: true }));
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(morgan("common"));
+app.use(cors());
+app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 // routes
 app.use("/api/user", userRoutes);
+app.use("/api/user", postsRoutes);
+app.use("/api/user", tripRoutes);
 
 const port = process.env.PORT || 5000;
 const db = process.env.MONGO_DB;
 
 mongoose
-  .connect(db, {})
+  .set("strictQuery", true)
+  .connect(db)
   .then(() => {
     app.listen(port, (req, res) => {
       console.log(`connected to port ${port}`);
