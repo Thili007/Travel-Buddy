@@ -16,7 +16,6 @@ import SnowshoeingSharpIcon from "@mui/icons-material/SnowshoeingSharp";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
@@ -27,16 +26,21 @@ import { Stack } from "@mui/system";
 import { useState } from "react";
 import { utilities } from "./Utilities";
 import { Navigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setPage } from "../../reducers/displayPages";
+import { setMode } from "../../reducers/mode";
 
-export const NavBar = ({ setMode, mode }) => {
+export const NavBar = () => {
   const { logout } = useLogout();
   const { user } = useUserContext();
   const dispatch = useDispatch();
+  // const modes = useSelector((state) => state.changeMode);
   const [mobileMenu, setMobileMenu] = useState(false);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
+  const modes = useSelector((state) => state.changeMode);
+
+  console.log(modes);
   const logOutHandler = () => {
     logout();
   };
@@ -82,9 +86,9 @@ export const NavBar = ({ setMode, mode }) => {
               <Box>
                 <Tooltip
                   title={
-                    mode === "light"
-                      ? "Switch to DarkMode"
-                      : "Switch to LightMode"
+                    modes === "light"
+                      ? "Switch to LightMode"
+                      : "Switch to DarkMode"
                   }
                   sx={{
                     "& svg": {
@@ -113,12 +117,8 @@ export const NavBar = ({ setMode, mode }) => {
                     },
                   }}
                 >
-                  <IconButton
-                    onClick={(e) =>
-                      setMode(mode === "light" ? "dark" : "light")
-                    }
-                  >
-                    {mode === "dark" ? <DarkModeIcon /> : <LightModeIcon />}
+                  <IconButton onClick={() => dispatch(setMode())}>
+                    {modes === "dark" ? <DarkModeIcon /> : <LightModeIcon />}
                     <ArrowRight
                       sx={{ position: "absolute", right: 4, opacity: 0 }}
                     />
@@ -238,17 +238,17 @@ export const NavBar = ({ setMode, mode }) => {
               >
                 <Tooltip
                   title={
-                    mode === "light"
+                    modes === "light"
                       ? "Switch to DarkMode"
                       : "Switch to LightMode"
                   }
                 >
                   <IconButton
                     onClick={(e) =>
-                      setMode(mode === "light" ? "dark" : "light")
+                      setMode(modes === "light" ? "dark" : "light")
                     }
                   >
-                    {mode === "dark" ? <DarkModeIcon /> : <LightModeIcon />}
+                    {modes === "dark" ? <DarkModeIcon /> : <LightModeIcon />}
                   </IconButton>
                 </Tooltip>
                 {utilities.map((uti, key) => (

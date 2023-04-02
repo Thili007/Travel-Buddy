@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useUserContext } from "./useUserContext";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUserData } from "../reducers/userSetup";
 
 export const useSignup = () => {

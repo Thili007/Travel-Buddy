@@ -8,6 +8,7 @@ import MyTrips from "../components/Posts/MyTrips";
 import { useSelector } from "react-redux";
 import MemoryCreater from "../components/Form/MemoryCreater/MemoryCreater";
 import { useEffect } from "react";
+import { NavBar } from "../components/Navbar/NavBar";
 
 const Home = () => {
   const isNonMobileScreen = useMediaQuery("(min-width:1000px)");
@@ -16,6 +17,7 @@ const Home = () => {
 
   return (
     <Box bgcolor={"background.default"} color={"text.primary"}>
+      <NavBar />
       <Box
         width="100%"
         padding="2rem 6%"
