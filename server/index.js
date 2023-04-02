@@ -26,7 +26,7 @@ app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(cors());
-app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+app.use("/images", express.static(path.join(__dirname, "/images")));
 
 // routes
 app.use("/api/user", userRoutes);

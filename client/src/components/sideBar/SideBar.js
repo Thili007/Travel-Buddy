@@ -1,18 +1,18 @@
-import { List } from "@mui/material";
+import { List, Paper } from "@mui/material";
 import { MyListItem, MyListItemText } from "./styles";
 
 import MemoryIcon from "@mui/icons-material/Memory";
-import { Stack } from "@mui/system";
 import { useDispatch } from "react-redux";
 import { setPage } from "../../reducers/displayPages";
 
 const SideBar = () => {
   const dispatch = useDispatch();
   return (
-    <Stack
+    <Paper
       sx={{
-        overflowY: "auto",
-        height: { sx: "auto", md: "95%" },
+        maxWidth: "100%",
+        m: "1.5rem",
+        p: "1.7rem",
       }}
     >
       <List component="nav">
@@ -33,7 +33,7 @@ const SideBar = () => {
           <MyListItemText primary="My Trips" />
         </MyListItem>
       </List>
-    </Stack>
+    </Paper>
   );
 };
 

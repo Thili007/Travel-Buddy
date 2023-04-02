@@ -14,7 +14,7 @@ import {
 const router = express.Router();
 
 router.get("/getAllTrips", Auth, getAllTrips);
-router.post("/createTrip", Auth, store.array("picture", 12), createTrip);
+router.post("/createTrip", Auth, store.array("picture", 6), createTrip);
 // router.get("/getTripById/:id", Auth, getTripsById);
 router.put("/updateTrip/:id", Auth, updateTrip);
 router.delete("/deleteTrip", Auth, deleteTrip);

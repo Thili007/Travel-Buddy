@@ -1,16 +1,18 @@
 import { Box, useMediaQuery } from "@mui/material";
-import { Stack } from "@mui/system";
-
+import { BoxMotion } from "../components/motions/Motions";
 import SideBar from "../components/sideBar/SideBar";
 import BuddyTrips from "../components/Posts/BuddyTrips";
 import Memories from "../components/Posts/Memories";
 import MyMemories from "../components/Posts/MyMemories";
 import MyTrips from "../components/Posts/MyTrips";
 import { useSelector } from "react-redux";
+import MemoryCreater from "../components/Form/MemoryCreater/MemoryCreater";
+import { useEffect } from "react";
 
 const Home = () => {
   const isNonMobileScreen = useMediaQuery("(min-width:1000px)");
   const displayPage = useSelector((state) => state.displayPages);
+  useEffect(() => {}, [displayPage]);
 
   return (
     <Box bgcolor={"background.default"} color={"text.primary"}>
@@ -21,15 +23,23 @@ const Home = () => {
         gap="2rem"
         justifyContent="space-between"
       >
-        <Box flex={1} p={2} flexBasis={isNonMobileScreen ? "26%" : undefined}>
-          <Stack
-            position={isNonMobileScreen ? "sticky" : undefined}
-            bgcolor={"#e8f5e9"}
-            width="100%"
+        {isNonMobileScreen && (
+          <BoxMotion
+            // animate={{ x: [0, 20] }}
+            transition={{ ease: "easeInOut", duration: 2 }}
+            flexBasis={isNonMobileScreen ? "26%" : undefined}
+            maxWidth={isNonMobileScreen ? "26%" : undefined}
+            sx={{ mr: "30px", ml: 0 }}
           >
-            <SideBar />
-          </Stack>
-        </Box>
+            <Box
+              position={isNonMobileScreen ? "fixed" : undefined}
+              // bgcolor={"#e8f5e9"}
+              width="26%"
+            >
+              <SideBar />
+            </Box>
+          </BoxMotion>
+        )}
         <Box
           flexBasis={isNonMobileScreen ? "44%" : undefined}
           mt={isNonMobileScreen ? undefined : "2rem"}
@@ -43,7 +53,7 @@ const Home = () => {
         {isNonMobileScreen && (
           <Box flexBasis="26%">
             <Box position="fixed">
-              <h1>Hello Box 3</h1>
+              <MemoryCreater />
             </Box>
           </Box>
         )}

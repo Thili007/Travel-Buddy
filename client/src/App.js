@@ -7,7 +7,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { useState } from "react";
-import Memories from "./components/Posts/Memories";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [mode, setMode] = useState("light");
@@ -44,6 +45,7 @@ const App = () => {
           </Box>
         </BrowserRouter>
       </Box>
+      <ToastContainer />
     </ThemeProvider>
   );
 };

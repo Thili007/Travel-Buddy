@@ -24,10 +24,7 @@ const PostModel = new Schema(
       type: [String],
       default: [],
     },
-    picturePath: {
-      type: [String],
-      default: [],
-    },
+    pictures: String,
     location: {
       type: String,
       required: true,

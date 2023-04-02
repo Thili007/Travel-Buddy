@@ -18,7 +18,7 @@ export const MyListItem = styled(ListItem)({
     boxShadow: "0 2px 4px rgba(0,0,0,0.08)",
   },
   "&:focus": {
-    outline: "none",
+    // outline: "none",
     backgroundColor: "#FAFAFA",
     boxShadow: `0 0 0 3px #e8f5e9`,
   },

@@ -1,6 +1,0 @@
-app.post('/content', function(req, res) { const filter = new badWords(); const
-content = req.body.content; const authorId = req.user._id; const filteredContent
-= filter.clean(content); const newContent = new Content({ author: authorId,
-content: filteredContent }); newContent.save(function(err) { if (err) {
-res.status(500).send('Error saving content.'); } else { res.send('Content saved
-successfully!'); } }); });

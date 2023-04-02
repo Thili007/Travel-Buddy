@@ -5,7 +5,7 @@ import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "2h" });
+  return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "24h" });
 };
 
 // Login controller

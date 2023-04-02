@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { useUserContext } from "./useUserContext";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../reducers/userSetup";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
 
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useUserContext();
+
+  // Redux parts
+  const userSetupDispatch = useDispatch();
 
   const login = async (userName, password) => {
     setIsLoading(true);
@@ -20,18 +25,28 @@ export const useLogin = () => {
     });
     const json = await response.json();
 
+    const user_id = json.userDetails._id;
+
     if (!response.ok) {
       setError(json.error);
       setIsLoading(false);
     }
 
     if (response.ok) {
-      //Storing the user in Local Storage
-      localStorage.setItem("user", JSON.stringify(json));
+      localStorage.setItem("USER_DETAILS", JSON.stringify(json.userDetails));
+      localStorage.setItem("TOKEN", JSON.stringify(json.token));
+      localStorage.setItem("USER_ID", JSON.stringify(json.userDetails._id));
 
-      // Update the UserContext
       dispatch({ type: "LOGIN", payload: json });
       setIsLoading(false);
+
+      // redux parts
+      userSetupDispatch(
+        setUserData({
+          user_id: user_id,
+          token: localStorage.getItem("TOKEN"),
+        })
+      );
     }
   };
 
