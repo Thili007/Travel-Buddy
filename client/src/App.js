@@ -6,13 +6,18 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import { useState } from "react";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { useSelector } from "react-redux";
+
 import LandingPage from "./pages/landingPage/LandingPage";
 
+
 const App = () => {
-  const [mode, setMode] = useState("light");
+  const mode = useSelector((state) => state.changeMode.mode);
+
   const darkTheme = createTheme({
     palette: {
       mode: mode,
@@ -24,7 +29,6 @@ const App = () => {
     <ThemeProvider theme={darkTheme}>
       <Box bgcolor={"background.default"} color={"text.primary"}>
         <BrowserRouter>
-          {/* <NavBar setMode={setMode} mode={mode} /> */}
           <CssBaseline />
           <Box sx={{ mt: "5rem" }}>
             <Routes>

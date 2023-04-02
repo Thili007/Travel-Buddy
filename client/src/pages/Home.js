@@ -16,9 +16,10 @@ const Home = () => {
   useEffect(() => {}, [displayPage]);
 
   return (
-    <>
+
+    <Box bgcolor={"background.default"} color={"text.primary"}>
       <NavBar />
-      <Box bgcolor={"background.default"} color={"text.primary"}>
+      
         <Box
           width="100%"
           padding="2rem 6%"
