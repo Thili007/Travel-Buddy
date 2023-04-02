@@ -29,6 +29,7 @@ import { utilities } from "./Utilities";
 import { Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setPage } from "../../reducers/displayPages";
+import Logo from "../../assets/LogoLight.png";
 
 export const NavBar = ({ setMode, mode }) => {
   const { logout } = useLogout();
@@ -50,7 +51,10 @@ export const NavBar = ({ setMode, mode }) => {
       }}
     >
       <Toolbar>
-        <SnowshoeingSharpIcon sx={{ color: "#a5d6a7", fontSize: "60px" }} />
+        {/* <SnowshoeingSharpIcon sx={{ color: "#a5d6a7", fontSize: "60px" }} /> */}
+        <Link to={"/"}>
+          <img src={Logo} alt="" className=" w-[100px] h-[80px] " />
+        </Link>
         <Typography
           fontFamily={"Gloria Hallelujah, cursive;"}
           variant="h1"
