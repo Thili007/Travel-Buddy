@@ -78,7 +78,7 @@ const getUserPosts = async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    res.status(404).json({ message: error });
+    res.status(404).json({ message: "There are no user posts" });
   }
 };
 

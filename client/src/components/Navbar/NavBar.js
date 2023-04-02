@@ -25,7 +25,7 @@ import ArrowRight from "@mui/icons-material/ArrowRight";
 import { Stack } from "@mui/system";
 import { useState } from "react";
 import { utilities } from "./Utilities";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setPage } from "../../reducers/displayPages";
 import { setMode } from "../../reducers/mode";

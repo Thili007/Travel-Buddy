@@ -71,6 +71,7 @@ const Memories = () => {
       dispatch(setLoading(false));
     }, 3000);
     dispatch(getPosts());
+    dispatch(deletePost());
   }, [dispatch, id]);
 
   return (
