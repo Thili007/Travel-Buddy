@@ -8,7 +8,11 @@ import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import { useSelector } from "react-redux";
+
+import LandingPage from "./pages/landingPage/LandingPage";
+
 
 const App = () => {
   const mode = useSelector((state) => state.changeMode.mode);
@@ -27,19 +31,29 @@ const App = () => {
           <CssBaseline />
           <Box sx={{ mt: "5rem" }}>
             <Routes>
-              <Route
+              {/* <Route
                 path="/login"
                 element={!user ? <Login /> : <Navigate to="/" />}
               />
               <Route
                 path="/signup"
                 element={!user ? <Signup /> : <Navigate to="/" />}
-              />
-
-              {/* After Login Routes */}
+              /> */}
               <Route
                 path="/"
+                element={!user ? <LandingPage /> : <Navigate to="/home" />}
+              />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+
+              {/* After Login Routes */}
+              {/* <Route
+                path="/"
                 element={user ? <Home /> : <Navigate to="/login" />}
+              /> */}
+              <Route
+                path="/home"
+                element={user ? <Home /> : <Navigate to="/" />}
               />
             </Routes>
           </Box>

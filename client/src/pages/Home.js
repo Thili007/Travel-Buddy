@@ -14,51 +14,54 @@ const Home = () => {
   const displayPage = useSelector((state) => state.displayPages);
 
   return (
+
     <Box bgcolor={"background.default"} color={"text.primary"}>
       <NavBar />
-      <Box
-        width="100%"
-        padding="2rem 6%"
-        display={isNonMobileScreen ? "flex" : "block"}
-        gap="2rem"
-        justifyContent="space-between"
-      >
-        {isNonMobileScreen && (
-          <BoxMotion
-            // animate={{ x: [0, 20] }}
-            transition={{ ease: "easeInOut", duration: 2 }}
-            flexBasis={isNonMobileScreen ? "26%" : undefined}
-            maxWidth={isNonMobileScreen ? "26%" : undefined}
-            sx={{ mr: "30px", ml: 0 }}
-          >
-            <Box
-              position={isNonMobileScreen ? "fixed" : undefined}
-              // bgcolor={"#e8f5e9"}
-              width="26%"
-            >
-              <SideBar />
-            </Box>
-          </BoxMotion>
-        )}
+      
         <Box
-          flexBasis={isNonMobileScreen ? "44%" : undefined}
-          mt={isNonMobileScreen ? undefined : "2rem"}
-          sx={{ backgroundColor: "#e8f5e9" }}
+          width="100%"
+          padding="2rem 6%"
+          display={isNonMobileScreen ? "flex" : "block"}
+          gap="2rem"
+          justifyContent="space-between"
         >
-          {displayPage === "memories" && <Memories />}
-          {displayPage === "buddyTrips" && <BuddyTrips />}
-          {displayPage === "myMemories" && <MyMemories />}
-          {displayPage === "myTrips" && <MyTrips />}
-        </Box>
-        {isNonMobileScreen && (
-          <Box flexBasis="26%">
-            <Box position="fixed">
-              <MemoryCreater />
-            </Box>
+          {isNonMobileScreen && (
+            <BoxMotion
+              // animate={{ x: [0, 20] }}
+              transition={{ ease: "easeInOut", duration: 2 }}
+              flexBasis={isNonMobileScreen ? "26%" : undefined}
+              maxWidth={isNonMobileScreen ? "26%" : undefined}
+              sx={{ mr: "30px", ml: 0 }}
+            >
+              <Box
+                position={isNonMobileScreen ? "fixed" : undefined}
+                // bgcolor={"#e8f5e9"}
+                width="26%"
+              >
+                <SideBar />
+              </Box>
+            </BoxMotion>
+          )}
+          <Box
+            flexBasis={isNonMobileScreen ? "44%" : undefined}
+            mt={isNonMobileScreen ? undefined : "2rem"}
+            sx={{ backgroundColor: "#e8f5e9" }}
+          >
+            {displayPage === "memories" && <Memories />}
+            {displayPage === "buddyTrips" && <BuddyTrips />}
+            {displayPage === "myMemories" && <MyMemories />}
+            {displayPage === "myTrips" && <MyTrips />}
           </Box>
-        )}
+          {isNonMobileScreen && (
+            <Box flexBasis="26%">
+              <Box position="fixed">
+                <MemoryCreater />
+              </Box>
+            </Box>
+          )}
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 
