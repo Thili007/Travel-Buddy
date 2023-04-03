@@ -26,5 +26,8 @@
     "nodemailer": "^6.9.1",
     "otp-generator": "^4.0.1",
     "validator": "^13.9.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13"
   }
 }

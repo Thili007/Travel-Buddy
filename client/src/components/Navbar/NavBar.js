@@ -31,8 +31,8 @@ import { setPage } from "../../reducers/displayPages";
 
 import { setMode } from "../../reducers/mode";
 
-import Logo from "../../assets/LogoLight.png";
-
+import LogoLight from "../../assets/LogoLight.png";
+import LogoDark from "../../assets/LogoDark.png";
 
 export const NavBar = () => {
   const { logout } = useLogout();
@@ -44,7 +44,6 @@ export const NavBar = () => {
 
   const modes = useSelector((state) => state.changeMode);
 
-  console.log(modes);
   const logOutHandler = () => {
     logout();
   };
@@ -58,9 +57,12 @@ export const NavBar = () => {
       }}
     >
       <Toolbar>
-        {/* <SnowshoeingSharpIcon sx={{ color: "#a5d6a7", fontSize: "60px" }} /> */}
         <Link to={"/"}>
-          <img src={Logo} alt="" className=" w-[100px] h-[80px] " />
+          <img
+            src={modes.mode === "dark" ? LogoDark : LogoLight}
+            alt=""
+            className=" w-[100px] h-[80px] "
+          />
         </Link>
         <Typography
           fontFamily={"Gloria Hallelujah, cursive;"}
@@ -125,7 +127,11 @@ export const NavBar = () => {
                   }}
                 >
                   <IconButton onClick={() => dispatch(setMode())}>
-                    {modes === "dark" ? <DarkModeIcon /> : <LightModeIcon />}
+                    {modes.mode === "dark" ? (
+                      <DarkModeIcon />
+                    ) : (
+                      <LightModeIcon />
+                    )}
                     <ArrowRight
                       sx={{ position: "absolute", right: 4, opacity: 0 }}
                     />

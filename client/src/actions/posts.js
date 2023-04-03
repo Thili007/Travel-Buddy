@@ -3,8 +3,9 @@ import {
   fetchPosts,
   createMemo,
   updatedPosts,
-  deletedPost,
   fetchUserPosts,
+  addComment,
+  likedPost,
 } from "../reducers/posts";
 
 // Actions Creators
@@ -13,7 +14,8 @@ import {
 export const getPosts = () => async (dispatch) => {
   try {
     const { data } = await api.getAllPosts();
-    dispatch(fetchPosts({ posts: data.post }));
+
+    dispatch(fetchPosts(data));
   } catch (error) {
     console.log(error);
   }
@@ -23,7 +25,8 @@ export const getPosts = () => async (dispatch) => {
 export const getUserPosts = () => async (dispatch) => {
   try {
     const { data } = await api.getUserPosts();
-    dispatch(fetchUserPosts({ userPosts: data.post }));
+    console.log("data actions", data);
+    dispatch(fetchUserPosts(data));
   } catch (error) {
     console.log(error);
   }
@@ -34,7 +37,7 @@ export const getUserPosts = () => async (dispatch) => {
 export const createPosts = (post) => async (dispatch) => {
   try {
     const { data } = await api.createPost(post);
-    dispatch(createMemo({ posts: data }));
+    dispatch(createMemo(data));
   } catch (error) {
     console.log(error);
   }
@@ -42,8 +45,26 @@ export const createPosts = (post) => async (dispatch) => {
 
 export const updatePosts = (id, post) => async (dispatch) => {
   try {
-    const { data } = await api.updatePost(id, post);
-    dispatch(updatedPosts(data));
+    const { updatePost } = await api.updatePost(id, post);
+    console.log(updatePost);
+    dispatch(updatedPosts(updatePost));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const likePosts = (id) => async (dispatch) => {
+  try {
+    const { updatePost } = await api.likePost(id);
+    dispatch(likedPost(updatePost));
+  } catch (error) {}
+};
+
+export const commentPost = (value, id) => async (dispatch) => {
+  try {
+    const { data } = await api.comment(value, id);
+    console.log(data);
+    dispatch(addComment(data));
   } catch (error) {
     console.log(error);
   }
@@ -52,7 +73,6 @@ export const updatePosts = (id, post) => async (dispatch) => {
 export const deletePost = (id) => async (dispatch) => {
   try {
     await api.deletePost(id);
-    dispatch(deletedPost(id));
   } catch (error) {
     console.log(error);
   }
