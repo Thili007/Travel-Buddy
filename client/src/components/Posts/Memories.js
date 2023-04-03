@@ -1,6 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Image } from "mui-image";
-import { Collapse, ListItemIcon, Menu, MenuItem, Tooltip } from "@mui/material";
+import {
+  Button,
+  Collapse,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Tooltip,
+} from "@mui/material";
 import {
   Card,
   CardHeader,
@@ -19,30 +26,55 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import PlaceIcon from "@mui/icons-material/Place";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { getPosts, deletePost } from "../../actions/posts";
+import {
+  getPosts,
+  deletePost,
+  likePosts,
+  commentPost,
+} from "../../actions/posts";
 import { setLoading } from "../../reducers/pageLoader";
-import { getPostID } from "../../reducers/posts";
+import { deletedPost, getPostID, setPost } from "../../reducers/posts";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { TbEdit } from "react-icons/tb";
+import { BsHeart } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CommentSection from "../CommentSection/comments";
+import { useRef } from "react";
 
 const Memories = () => {
+  const user = JSON.parse(localStorage.getItem("USER_DETAILS"));
   const dispatch = useDispatch();
+  const commentsRef = useRef();
+  const post = useSelector((state) => state.posts.post);
+
   const [commentBox, setCommentBox] = useState({});
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState(post?.comments);
   const [postSettings, setPostSettings] = useState(new Map());
 
   const open = Boolean(postSettings);
   const loading = useSelector((state) => state.pageLoader);
 
   const posts = useSelector((state) => state.posts.posts);
+
+  console.log("Memory Posts", posts);
+
+  const [likes, setLikes] = useState(posts?.likes);
+
   const id = useSelector((state) => state.posts.post_id);
 
-  console.log(posts);
+  const userId = useSelector((state) => state.userSetup.user_id);
+
+  const hasLikedPost = posts.likes?.find((like) => like === userId);
 
   const handlePostSettingsOpen = (postId, event) => {
     setPostSettings((prev) => new Map(prev).set(postId, event.currentTarget));
   };
+
   const handlePostSettingsClose = (postId) => {
     setPostSettings((prev) => {
       const newMap = new Map(prev);
@@ -57,13 +89,56 @@ const Memories = () => {
       ...prevCommentBoxes,
       [postId]: !prevCommentBoxes[postId],
     }));
+    dispatch(setPost(postId));
+  };
+
+  const handleComment = (postId) => {
+    const newComments = dispatch(
+      commentPost(`${user?.userName}: ${comment}`, postId)
+    );
+
+    // setComment("");
+    setComments(newComments);
+
+    // commentsRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleItemClick = (id) => {
     dispatch(getPostID(id));
   };
   const handleDelete = (id) => {
+    toast.error("You Deleted Your Memory", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
     dispatch(deletePost(id));
+    dispatch(deletedPost(id));
+  };
+
+  const handleLike = async (id) => {
+    toast.success("You Liked a Memory", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    dispatch(likePosts(id));
+
+    if (hasLikedPost) {
+      setLikes(posts.likes.filter((id) => id !== userId));
+    } else {
+      setLikes([...(posts.likes || []), userId]);
+    }
   };
 
   useEffect(() => {
@@ -71,7 +146,7 @@ const Memories = () => {
       dispatch(setLoading(false));
     }, 3000);
     dispatch(getPosts());
-  }, [dispatch, id]);
+  }, [dispatch, id, likes, comments]);
 
   return (
     <BoxMotion
@@ -84,7 +159,7 @@ const Memories = () => {
         borderRadius: "0.75rem",
       }}
     >
-      {posts.map((post) => {
+      {posts?.map((post) => {
         return (
           <Card
             key={post._id}
@@ -115,7 +190,7 @@ const Memories = () => {
                   </Avatar>
                 }
                 title={post.title}
-                subheader={moment(post.updatedAt).fromNow()}
+                subheader={moment(post.createdAt).fromNow()}
                 action={
                   <Box>
                     <Tooltip title="Post Settings">
@@ -235,10 +310,22 @@ const Memories = () => {
                   animation="wave"
                 />
               ) : (
-                <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
                   <Stack>
-                    <IconButton sx={{ display: "flex", gap: "10px" }}>
-                      <FavoriteIcon sx={{ color: "#ef5350" }} />
+                    <IconButton
+                      sx={{ display: "flex", gap: "10px" }}
+                      onClick={() => handleLike(post._id)}
+                    >
+                      {post.likes.length > 0 ? (
+                        <FavoriteIcon sx={{ color: "#f44336" }} />
+                      ) : (
+                        <BsHeart color="green" size={"1.6rem"} style={{}} />
+                      )}
                       {post.likes.length}
                     </IconButton>
                   </Stack>
@@ -256,8 +343,12 @@ const Memories = () => {
                     <TextField
                       label="Add a Comments...."
                       sx={{ marginLeft: "30px" }}
+                      onChange={(e) => setComment(e.target.value)}
                     />
                   </Stack>
+                  <Button onClick={() => handleComment(post._id)}>
+                    <PlayArrowIcon fontSize="large" />
+                  </Button>
                 </Box>
               )}
             </CardActions>
@@ -270,7 +361,9 @@ const Memories = () => {
                   transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
                 }}
               >
-                <Typography variant="p">Comment Section</Typography>
+                <Typography variant="p">
+                  <CommentSection commentsRef={commentsRef} />
+                </Typography>
               </Collapse>
             )}
           </Card>

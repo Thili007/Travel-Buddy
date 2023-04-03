@@ -14,9 +14,11 @@ const MemoryCreater = () => {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.posts.post_id);
   const post = useSelector((state) =>
-    id ? state.posts.posts.find((item) => item._id === id) : null
+    id
+      ? state.posts.posts.find((item) => item._id === id) ||
+        state.posts.userPosts.find((item) => item._id === id)
+      : null
   );
-  console.log("current id", id);
 
   // React Hook Form
   const {
@@ -29,11 +31,6 @@ const MemoryCreater = () => {
     mode: "onChange",
     resolver: yupResolver(MemorySchema),
   });
-  useEffect(() => {
-    if (post) {
-      reset(post);
-    }
-  }, [id, post, reset]);
 
   // On Submit
   const onSubmit = (data) => {
@@ -55,6 +52,13 @@ const MemoryCreater = () => {
     }
     clearAll();
   };
+
+  useEffect(() => {
+    if (post) {
+      reset(post);
+    }
+  }, [dispatch, id, post, reset]);
+
   const clearAll = () => {
     dispatch(getPostID(null));
     reset(null);

@@ -35,6 +35,7 @@ export const useSignup = () => {
     if (response.ok) {
       localStorage.setItem("USER_DETAILS", JSON.stringify(json.userDetails));
       localStorage.setItem("TOKEN", JSON.stringify(json.token));
+      localStorage.setItem("USER_ID", JSON.stringify(json.userDetails._id));
 
       dispatch({ type: "LOGIN", payload: json });
       setIsLoading(false);

@@ -4,6 +4,7 @@ const postState = {
   posts: [],
   post_id: null,
   userPosts: [],
+  post: [],
 };
 
 const postsSlice = createSlice({
@@ -16,17 +17,76 @@ const postsSlice = createSlice({
     fetchPosts: (state, action) => {
       state.posts = action.payload.posts;
     },
-    fetchUserPosts: (state, action) => {},
+    fetchUserPosts: (state, action) => {
+      state.userPosts = action.payload;
+    },
+    setPost: (state, action) => {
+      const post =
+        state.posts.find((item) => item._id === action.payload) ||
+        state.userPosts.find((item) => item._id === action.payload);
+      state.post = post || null;
+    },
     createMemo: (state, action) => {
-      return [...state.posts, action.payload];
+      state.posts = { ...state.posts, posts: [...state.posts, action.payload] };
+      state.userPosts = {
+        ...state.userPosts,
+        userPosts: [...state.userPosts, action.payload],
+      };
     },
     updatedPosts: (state, action) => {
-      return state.posts.map((post) =>
-        post._id === action.payload._id ? action.payload : post
-      );
+      state.posts = [
+        state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      ];
+      state.userPosts = [
+        state.userPosts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      ];
+    },
+    likedPost: (state, action) => {
+      state.posts = [
+        state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      ];
+      state.userPosts = [
+        state.userPosts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      ];
+    },
+    addComment: (state, action) => {
+      if (state.posts) {
+        state.posts = state.posts.map((post) => {
+          if (post._id === action.payload._id) {
+            return {
+              ...post,
+              comments: [...post.comments, action.payload.comment],
+            };
+          }
+          return post;
+        });
+      }
+
+      if (state.userPosts) {
+        state.userPosts = state.userPosts.map((post) => {
+          if (post._id === action.payload._id) {
+            return {
+              ...post,
+              comments: [...post.comments, action.payload.comment],
+            };
+          }
+          return post;
+        });
+      }
     },
     deletedPost: (state, action) => {
-      return state.posts.filter((post) => post._id !== action.payload);
+      state.posts = state.posts.filter((post) => post._id !== action.payload);
+      state.userPosts = state.userPosts.filter(
+        (post) => post._id !== action.payload
+      );
     },
   },
 });
@@ -35,9 +95,12 @@ export const {
   fetchPosts,
   fetchUserPosts,
   createMemo,
+  setPost,
   getPostID,
   updatedPosts,
   deletedPost,
+  addComment,
+  likedPost,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;

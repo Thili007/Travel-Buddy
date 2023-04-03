@@ -7,13 +7,11 @@ import MyMemories from "../components/Posts/MyMemories";
 import MyTrips from "../components/Posts/MyTrips";
 import { useSelector } from "react-redux";
 import MemoryCreater from "../components/Form/MemoryCreater/MemoryCreater";
-import { useEffect } from "react";
 import { NavBar } from "../components/Navbar/NavBar";
 
 const Home = () => {
   const isNonMobileScreen = useMediaQuery("(min-width:1000px)");
   const displayPage = useSelector((state) => state.displayPages);
-  useEffect(() => {}, [displayPage]);
 
   return (
     <Box bgcolor={"background.default"} color={"text.primary"}>

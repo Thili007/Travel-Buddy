@@ -30,6 +30,30 @@ export const updatePost = async (id, updatePost) =>
     },
   });
 
+export const likePost = async (id) =>
+  axios.put(
+    `${url}/${id}/likePost`,
+    { userId: `${localStorage.getItem("USER_ID").slice(1, -1)}` },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("TOKEN").slice(1, -1)}`,
+      },
+    }
+  );
+
+export const comment = (value, id) =>
+  axios.post(
+    `${url}/${id}/commentPost`,
+    { value },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("TOKEN").slice(1, -1)}`,
+      },
+    }
+  );
+
 export const deletePost = async (id) =>
   axios.delete(`${url}/deletePost/${id}`, {
     headers: {
@@ -38,10 +62,14 @@ export const deletePost = async (id) =>
     },
   });
 
-export const getUserPosts = async () =>
-  axios.post(`${url}/${localStorage.getItem("USER_ID").slice(1, -1)}`, {
+export const getUserPosts = async () => {
+  const id = localStorage.getItem("USER_ID").slice(1, -1);
+  const token = localStorage.getItem("TOKEN").slice(1, -1);
+  const data = await axios.get(`${url}/getUserPosts/${id}`, {
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${localStorage.getItem("TOKEN").slice(1, -1)}`,
+      authorization: `Bearer ${token}`,
     },
   });
+  return data;
+};

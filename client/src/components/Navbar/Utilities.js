@@ -5,8 +5,6 @@ import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import { SiYourtraveldottv } from "react-icons/si";
 import { MdOutlinePhotoSizeSelectActual } from "react-icons/md";
 import { BiTrip } from "react-icons/bi";
-import Memories from "../Posts/Memories";
-import Home from "../../pages/Home";
 
 export const utilities = [
   { name: "NOTIFICATIONS", icon: <NotificationsIcon />, navi: "undefined" },
