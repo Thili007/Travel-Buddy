@@ -30,7 +30,7 @@ export const updatePost = async (id, updatePost) =>
     },
   });
 
-export const likePost = async (id) =>
+export const likePosts = async (id) =>
   axios.put(
     `${url}/${id}/likePost`,
     { userId: `${localStorage.getItem("USER_ID").slice(1, -1)}` },

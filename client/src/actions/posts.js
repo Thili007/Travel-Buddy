@@ -6,6 +6,7 @@ import {
   fetchUserPosts,
   addComment,
   likedPost,
+  deletedPost,
 } from "../reducers/posts";
 
 // Actions Creators
@@ -55,15 +56,17 @@ export const updatePosts = (id, post) => async (dispatch) => {
 
 export const likePosts = (id) => async (dispatch) => {
   try {
-    const { updatePost } = await api.likePost(id);
-    dispatch(likedPost(updatePost));
-  } catch (error) {}
+    const { data } = await api.likePosts(id);
+    dispatch(likedPost(data));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const commentPost = (value, id) => async (dispatch) => {
   try {
     const { data } = await api.comment(value, id);
-    console.log(data);
+    console.log("comment", data);
     dispatch(addComment(data));
   } catch (error) {
     console.log(error);
@@ -73,6 +76,7 @@ export const commentPost = (value, id) => async (dispatch) => {
 export const deletePost = (id) => async (dispatch) => {
   try {
     await api.deletePost(id);
+    dispatch(deletedPost(id));
   } catch (error) {
     console.log(error);
   }
