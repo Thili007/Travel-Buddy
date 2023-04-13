@@ -1,16 +1,10 @@
 import { useState } from "react";
 import { useUserContext } from "./useUserContext";
-import { useDispatch } from "react-redux";
-import { setUserData } from "../reducers/userSetup";
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useUserContext();
-
-  // Redux parts
-
-  const userSetupDispatch = useDispatch();
 
   const signUp = async (userName, email, password) => {
     setIsLoading(true);
@@ -25,8 +19,6 @@ export const useSignup = () => {
     });
     const json = await response.json();
 
-    const user_id = json.userDetails._id;
-
     if (!response.ok) {
       setIsLoading(false);
       setError(json.error);
@@ -39,14 +31,6 @@ export const useSignup = () => {
 
       dispatch({ type: "LOGIN", payload: json });
       setIsLoading(false);
-
-      // redux parts
-      userSetupDispatch(
-        setUserData({
-          user_id: user_id,
-          token: localStorage.getItem("TOKEN"),
-        })
-      );
     }
   };
   return { signUp, isLoading, error };

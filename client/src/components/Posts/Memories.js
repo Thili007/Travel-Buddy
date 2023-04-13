@@ -43,34 +43,42 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CommentSection from "../CommentSection/comments";
-import { useRef } from "react";
 
 const Memories = () => {
   const user = JSON.parse(localStorage.getItem("USER_DETAILS"));
   const dispatch = useDispatch();
-  const commentsRef = useRef();
   const post = useSelector((state) => state.posts.post);
-
-  const [commentBox, setCommentBox] = useState({});
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState(post?.comments);
+  const [commentBox, setCommentBox] = useState([]);
   const [postSettings, setPostSettings] = useState(new Map());
 
   const open = Boolean(postSettings);
   const loading = useSelector((state) => state.pageLoader);
 
   const posts = useSelector((state) => state.posts.posts);
+  const [likes, setLikes] = useState(null);
 
   console.log("Memory Posts", posts);
+  console.log("Memory likes", likes);
 
-  const [likes, setLikes] = useState(posts?.likes);
+  // const id = useSelector((state) => state.posts.post_id);
 
-  const id = useSelector((state) => state.posts.post_id);
+  const userId = localStorage.getItem("USER_ID");
 
-  const userId = useSelector((state) => state.userSetup.user_id);
+  console.log("userID", userId);
+  const hasLikedPost = posts?.find((post) =>
+    post._id === likes
+      ? post.likes.filter((item) =>
+          item === userId ? "Post liked" : "post not Liked"
+        )
+      : null
+  );
+  //post.likes.includes((id) =>
+  //   id === userId ? "has Liked" : "not Liked"
+  // );
 
-  const hasLikedPost = posts.likes?.find((like) => like === userId);
-
+  console.log("post liked", hasLikedPost);
   const handlePostSettingsOpen = (postId, event) => {
     setPostSettings((prev) => new Map(prev).set(postId, event.currentTarget));
   };
@@ -97,8 +105,8 @@ const Memories = () => {
       commentPost(`${user?.userName}: ${comment}`, postId)
     );
 
-    // setComment("");
     setComments(newComments);
+    setComment("");
 
     // commentsRef.current.scrollIntoView({ behavior: "smooth" });
   };
@@ -122,23 +130,34 @@ const Memories = () => {
   };
 
   const handleLike = async (id) => {
-    toast.success("You Liked a Memory", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
     dispatch(likePosts(id));
+    setLikes(id);
 
-    if (hasLikedPost) {
-      setLikes(posts.likes.filter((id) => id !== userId));
-    } else {
-      setLikes([...(posts.likes || []), userId]);
-    }
+    // if (hasLikedPost) {
+    //   setLikes(posts.likes.filter((id) => id !== userId));
+    //   toast.success("You liked a Memory", {
+    //     position: "top-right",
+    //     autoClose: 3000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "light",
+    //   });
+    // } else {
+    //   setLikes(posts.likes || []);
+    //   toast.error("You Disliked a Memory", {
+    //     position: "top-right",
+    //     autoClose: 3000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "light",
+    //   });
+    // }
   };
 
   useEffect(() => {
@@ -146,7 +165,7 @@ const Memories = () => {
       dispatch(setLoading(false));
     }, 3000);
     dispatch(getPosts());
-  }, [dispatch, id, likes, comments]);
+  }, [dispatch, comments]);
 
   return (
     <BoxMotion
@@ -167,8 +186,8 @@ const Memories = () => {
               // maxWidth: 500,
               display: "flex",
               flexDirection: "column",
-              padding: "30px",
-              margin: "20px",
+              padding: "20px",
+              margin: "10px",
               border: "4px solid",
               borderColor: "#a5d6a7",
               borderRadius: 2,
@@ -193,20 +212,22 @@ const Memories = () => {
                 subheader={moment(post.createdAt).fromNow()}
                 action={
                   <Box>
-                    <Tooltip title="Post Settings">
-                      <IconButton
-                        aria-label="settings"
-                        onClick={(event) =>
-                          handlePostSettingsOpen(post._id, event)
-                        }
-                        sx={{ ml: 2 }}
-                        aria-controls={open ? "account-menu" : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? "true" : undefined}
-                      >
-                        <MoreVertIcon />
-                      </IconButton>
-                    </Tooltip>
+                    {user?.userName === post?.user?.userName && (
+                      <Tooltip title="Post Settings">
+                        <IconButton
+                          aria-label="settings"
+                          onClick={(event) =>
+                            handlePostSettingsOpen(post._id, event)
+                          }
+                          sx={{ ml: 2 }}
+                          aria-controls={open ? "account-menu" : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={open ? "true" : undefined}
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
+                      </Tooltip>
+                    )}
                   </Box>
                 }
               />
@@ -324,7 +345,7 @@ const Memories = () => {
                       {post.likes.length > 0 ? (
                         <FavoriteIcon sx={{ color: "#f44336" }} />
                       ) : (
-                        <BsHeart color="green" size={"1.6rem"} style={{}} />
+                        <BsHeart color="green" size={"1.6rem"} />
                       )}
                       {post.likes.length}
                     </IconButton>
@@ -342,8 +363,9 @@ const Memories = () => {
 
                     <TextField
                       label="Add a Comments...."
-                      sx={{ marginLeft: "30px" }}
+                      sx={{ marginLeft: "50px" }}
                       onChange={(e) => setComment(e.target.value)}
+                      value={comment}
                     />
                   </Stack>
                   <Button onClick={() => handleComment(post._id)}>
@@ -362,7 +384,7 @@ const Memories = () => {
                 }}
               >
                 <Typography variant="p">
-                  <CommentSection commentsRef={commentsRef} />
+                  <CommentSection />
                 </Typography>
               </Collapse>
             )}

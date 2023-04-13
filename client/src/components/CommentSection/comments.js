@@ -1,11 +1,13 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
-const CommentSection = ({ commentsRef }) => {
-  const post = useSelector((state) => state.posts.post.comments);
+const CommentSection = () => {
+  const post = useSelector((state) => state.posts.posts.comments);
 
-  console.log(post);
+  // useEffect(() => {}, [post]);
+
+  // console.log(post);
 
   return (
     <Box>
@@ -14,12 +16,13 @@ const CommentSection = ({ commentsRef }) => {
           <Typography gutterBottom variant="h6">
             Comments
           </Typography>
-          {/* <Box ref={commentsRef} /> */}
           {post?.map((c, i) => (
-            <Typography key={i} gutterBottom variant="subtitle1">
-              <strong>{c.split(": ")[0]}</strong>
-              {c.split(":")[1]}
-            </Typography>
+            <Box key={i}>
+              <Typography gutterBottom variant="subtitle1">
+                <strong>{c.split(": ")[0]}</strong>
+                {c.split(":")[1]}
+              </Typography>
+            </Box>
           ))}
         </Box>
       </Box>

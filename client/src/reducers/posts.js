@@ -27,11 +27,8 @@ const postsSlice = createSlice({
       state.post = post || null;
     },
     createMemo: (state, action) => {
-      state.posts = { ...state.posts, posts: [...state.posts, action.payload] };
-      state.userPosts = {
-        ...state.userPosts,
-        userPosts: [...state.userPosts, action.payload],
-      };
+      state.posts = [...state.posts, action.payload];
+      state.userPosts = [...state.posts, action.payload];
     },
     updatedPosts: (state, action) => {
       state.posts = [
@@ -46,16 +43,28 @@ const postsSlice = createSlice({
       ];
     },
     likedPost: (state, action) => {
-      state.posts = [
-        state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-      ];
-      state.userPosts = [
-        state.userPosts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-      ];
+      if (state.posts) {
+        state.posts = state.posts.map((post) => {
+          if (post._id === action.payload._id) {
+            return {
+              ...post,
+              likes: action.payload.likes,
+            };
+          }
+          return post;
+        });
+      }
+      if (state.userPosts) {
+        state.userPosts = state.userPosts.map((post) => {
+          if (post._id === action.payload._id) {
+            return {
+              ...post,
+              likes: action.payload.likes,
+            };
+          }
+          return post;
+        });
+      }
     },
     addComment: (state, action) => {
       if (state.posts) {
@@ -63,7 +72,7 @@ const postsSlice = createSlice({
           if (post._id === action.payload._id) {
             return {
               ...post,
-              comments: [...post.comments, action.payload.comment],
+              comments: action.payload.comment,
             };
           }
           return post;
@@ -75,7 +84,7 @@ const postsSlice = createSlice({
           if (post._id === action.payload._id) {
             return {
               ...post,
-              comments: [...post.comments, action.payload.comment],
+              comments: action.payload.comment,
             };
           }
           return post;

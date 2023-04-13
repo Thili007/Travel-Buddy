@@ -156,7 +156,7 @@ const likePost = async (req, res) => {
     const post = await UserPosts.findById(id);
     const isLiked = post.likes.indexOf(userId);
 
-    console.log("post", post);
+    // console.log("post", post);
 
     if (isLiked === -1) {
       post.likes.push(userId);
@@ -170,9 +170,11 @@ const likePost = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json(updatedPost);
+    console.log("updated post", updatedPost);
+
+    return res.status(200).json(updatedPost);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    return res.status(404).json({ message: err.message });
   }
 };
 
@@ -190,7 +192,7 @@ const commentPost = async (req, res) => {
     {
       new: true,
     }
-  );
+  ).sort({ createdAt: -1 });
 
   res.json(updatedPost);
 };

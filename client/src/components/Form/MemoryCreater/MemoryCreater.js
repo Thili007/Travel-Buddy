@@ -53,16 +53,16 @@ const MemoryCreater = () => {
     clearAll();
   };
 
+  const clearAll = () => {
+    dispatch(getPostID(null));
+    reset();
+  };
+
   useEffect(() => {
     if (post) {
       reset(post);
     }
-  }, [dispatch, id, post, reset]);
-
-  const clearAll = () => {
-    dispatch(getPostID(null));
-    reset(null);
-  };
+  }, [dispatch, id, post, reset, register]);
 
   return (
     <Paper
@@ -91,6 +91,7 @@ const MemoryCreater = () => {
           label="Title"
           error={!!errors?.title?.type}
           {...register("title")}
+          // value={}
         />
         {errors?.title?.type === "required" && (
           <Typography variant="p" sx={{ color: "red", width: "100%" }}>
