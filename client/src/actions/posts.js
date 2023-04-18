@@ -46,9 +46,9 @@ export const createPosts = (post) => async (dispatch) => {
 
 export const updatePosts = (id, post) => async (dispatch) => {
   try {
-    const { updatePost } = await api.updatePost(id, post);
-    console.log(updatePost);
-    dispatch(updatedPosts(updatePost));
+    const { data } = await api.updatePost(id, post);
+    console.log(data);
+    dispatch(updatedPosts(data));
   } catch (error) {
     console.log(error);
   }
@@ -66,7 +66,7 @@ export const likePosts = (id) => async (dispatch) => {
 export const commentPost = (value, id) => async (dispatch) => {
   try {
     const { data } = await api.comment(value, id);
-    console.log("comment", data);
+
     dispatch(addComment(data));
   } catch (error) {
     console.log(error);

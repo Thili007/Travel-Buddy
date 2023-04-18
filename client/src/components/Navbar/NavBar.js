@@ -12,7 +12,6 @@ import {
   useMediaQuery,
   Tooltip,
 } from "@mui/material";
-import SnowshoeingSharpIcon from "@mui/icons-material/SnowshoeingSharp";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -25,7 +24,6 @@ import ArrowRight from "@mui/icons-material/ArrowRight";
 import { Stack } from "@mui/system";
 import { useState } from "react";
 import { utilities } from "./Utilities";
-// import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setPage } from "../../reducers/displayPages";
 
@@ -38,7 +36,6 @@ export const NavBar = () => {
   const { logout } = useLogout();
   const { user } = useUserContext();
   const dispatch = useDispatch();
-  // const modes = useSelector((state) => state.changeMode);
   const [mobileMenu, setMobileMenu] = useState(false);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
@@ -87,7 +84,7 @@ export const NavBar = () => {
             {user && (
               <Stack sx={{ ml: "auto" }}>
                 <Avatar sx={{ bgcolor: "#a5d6a7" }}>
-                  {user?.userName.charAt(0)}
+                  {user?.userName.charAt(0).toUpperCase()}
                 </Avatar>
               </Stack>
             )}
@@ -212,10 +209,13 @@ export const NavBar = () => {
             bottom="0"
             height="100%"
             zIndex="10"
-            maxWidth="500px"
-            minWidth="300px"
             backgroundColor="#a5d6a7"
-            sx={{ opacity: 0.8 }}
+            sx={{
+              opacity: 0.8,
+              maxWidth: "300px",
+              minWidth: "300px",
+              "@media (max-width: 768px)": { maxWidth: "250px" },
+            }}
           >
             <Box display="flex" justifyContent="flex-end">
               <IconButton
@@ -231,7 +231,7 @@ export const NavBar = () => {
               <Box display="flex">
                 <IconButton sx={{ m: "auto", gap: "2rem" }}>
                   <Avatar sx={{ width: 60, height: 60 }}>
-                    {user?.userName.charAt(0)}
+                    {user?.userName.charAt(0).toUpperCase()}
                   </Avatar>
                   <Typography sx={{ fontSize: "2rem" }}>
                     {user?.userName}
@@ -256,12 +256,15 @@ export const NavBar = () => {
                       : "Switch to LightMode"
                   }
                 >
-                  <IconButton
-                    onClick={(e) =>
-                      setMode(modes === "light" ? "dark" : "light")
-                    }
-                  >
-                    {modes === "dark" ? <DarkModeIcon /> : <LightModeIcon />}
+                  <IconButton onClick={() => dispatch(setMode())}>
+                    {modes.mode === "dark" ? (
+                      <DarkModeIcon />
+                    ) : (
+                      <LightModeIcon />
+                    )}
+                    <ArrowRight
+                      sx={{ position: "absolute", right: 4, opacity: 0 }}
+                    />
                   </IconButton>
                 </Tooltip>
                 {utilities.map((uti, key) => (

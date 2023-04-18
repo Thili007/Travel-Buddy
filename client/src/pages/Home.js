@@ -44,6 +44,8 @@ const Home = () => {
           flexBasis={isNonMobileScreen ? "44%" : undefined}
           mt={isNonMobileScreen ? undefined : "2rem"}
           sx={{ backgroundColor: "#e8f5e9" }}
+          bgcolor={"background.default"}
+          color={"text.primary"}
         >
           {displayPage === "memories" && <Memories />}
           {displayPage === "buddyTrips" && <BuddyTrips />}
@@ -51,7 +53,11 @@ const Home = () => {
           {displayPage === "myTrips" && <MyTrips />}
         </Box>
         {isNonMobileScreen && (
-          <Box flexBasis="26%">
+          <Box
+            flexBasis="26%"
+            bgcolor={"background.default"}
+            color={"text.primary"}
+          >
             <Box position="fixed">
               <MemoryCreater />
             </Box>

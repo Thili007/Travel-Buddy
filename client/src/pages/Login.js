@@ -28,7 +28,7 @@ const Login = ({ closeModal }) => {
             placeholder="Enter Your Username..."
             onChange={(e) => setLoginName(e.target.value)}
             value={loginName}
-          />{" "}
+          />
         </div>
         <div className="form-group">
           <input
@@ -38,11 +38,11 @@ const Login = ({ closeModal }) => {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-        </div>{" "}
+        </div>
         <div className="form-group">
           <button className="modal-btn" disabled={isLoading}>
             Login
-          </button>{" "}
+          </button>
         </div>
         {error && <div>{error}</div>}
         <p className="forgot-pass">

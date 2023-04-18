@@ -15,7 +15,7 @@ const postsSlice = createSlice({
       state.post_id = action.payload;
     },
     fetchPosts: (state, action) => {
-      state.posts = action.payload.posts;
+      state.posts = action.payload;
     },
     fetchUserPosts: (state, action) => {
       state.userPosts = action.payload;
@@ -27,20 +27,17 @@ const postsSlice = createSlice({
       state.post = post || null;
     },
     createMemo: (state, action) => {
-      state.posts = [...state.posts, action.payload];
-      state.userPosts = [...state.posts, action.payload];
+      state.posts = [action.payload, ...state.posts];
+      state.userPosts = [action.payload, ...state.userPosts];
     },
     updatedPosts: (state, action) => {
-      state.posts = [
-        state.posts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-      ];
-      state.userPosts = [
-        state.userPosts.map((post) =>
-          post._id === action.payload._id ? action.payload : post
-        ),
-      ];
+      state.posts = state.posts.map((post) =>
+        post._id === action.payload._id ? action.payload : post
+      );
+
+      state.userPosts = state.userPosts.map((post) =>
+        post._id === action.payload._id ? action.payload : post
+      );
     },
     likedPost: (state, action) => {
       if (state.posts) {
@@ -72,7 +69,7 @@ const postsSlice = createSlice({
           if (post._id === action.payload._id) {
             return {
               ...post,
-              comments: action.payload.comment,
+              comments: action.payload.comments,
             };
           }
           return post;
@@ -84,7 +81,7 @@ const postsSlice = createSlice({
           if (post._id === action.payload._id) {
             return {
               ...post,
-              comments: action.payload.comment,
+              comments: action.payload.comments,
             };
           }
           return post;
