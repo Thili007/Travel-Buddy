@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useUserContext } from "./useUserContext";
+import { setIsAuth } from "../reducers/isAuth";
+import { useDispatch } from "react-redux";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
-
   const [isLoading, setIsLoading] = useState(null);
-  const { dispatch } = useUserContext();
-
-  // Redux parts
+  const { dispatch: dispatchUserContext } = useUserContext();
+  const dispatch = useDispatch();
 
   const login = async (userName, password) => {
     setIsLoading(true);
@@ -21,7 +21,7 @@ export const useLogin = () => {
       body: JSON.stringify({ userName, password }),
     });
     const json = await response.json();
-
+    console.log("json", json);
     if (!response.ok) {
       setError(json.error);
       setIsLoading(false);
@@ -31,8 +31,9 @@ export const useLogin = () => {
       localStorage.setItem("USER_DETAILS", JSON.stringify(json.userDetails));
       localStorage.setItem("TOKEN", JSON.stringify(json.token));
       localStorage.setItem("USER_ID", JSON.stringify(json.userDetails._id));
+      dispatch(setIsAuth(true));
 
-      dispatch({ type: "LOGIN", payload: json });
+      dispatchUserContext({ type: "LOGIN", payload: json });
       setIsLoading(false);
     }
   };

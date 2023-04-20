@@ -23,7 +23,7 @@ const PostModel = new Schema(
     },
     pictures: String,
     location: {
-      type: String,
+      type: Object,
       required: true,
     },
     date: {

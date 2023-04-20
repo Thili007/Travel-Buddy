@@ -7,7 +7,7 @@ import badWords from "bad-words";
 const getAllPosts = async (req, res) => {
   let posts;
   try {
-    posts = await UserPosts.find().populate("user").sort({ createdAt: -1 });
+    posts = await UserPosts.find({}).populate("user").sort({ createdAt: -1 });
   } catch (error) {
     return console.log(error);
   }
@@ -15,7 +15,7 @@ const getAllPosts = async (req, res) => {
     return res.status(404).json({ message: "There was a error" });
   }
 
-  return res.status(200).json({ posts });
+  return res.status(200).json(posts);
 };
 
 // to create posts
@@ -62,6 +62,7 @@ const createPosts = async (req, res) => {
     await existUser.save({ session });
     post = await post.save({ session });
     session.commitTransaction();
+
     res.status(200).json(post);
   } catch (error) {
     res.status(404).json({ message: "Unable To Create post" });
@@ -105,9 +106,6 @@ const getPostById = async (req, res) => {
 
 // to update post
 const updatePosts = async (req, res) => {
-  console.log("id", req.params.id);
-  console.log("body", req.body);
-
   const id = req.params.id;
   const post = req.body;
 
@@ -137,22 +135,21 @@ const updatePosts = async (req, res) => {
         date: new Date(`${post.date}`),
       },
       { new: true }
-    );
+    ).populate("user");
+
+    return res.status(200).json(updatedPost);
   } catch (error) {
-    return console.log(error);
-  }
-  if (!updatePosts) {
+    console.log(error);
     return res.status(404).json({ message: "Unable to Update the post" });
   }
-  res.status(200).json({ updatePosts });
 };
 
 const likePost = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log("post id", req.params.id);
+
     const { userId } = req.body;
-    console.log("userId", req.body);
+
     const post = await UserPosts.findById(id);
     const isLiked = post.likes.indexOf(userId);
 
@@ -169,8 +166,6 @@ const likePost = async (req, res) => {
       { likes: post.likes },
       { new: true }
     );
-
-    console.log("updated post", updatedPost);
 
     return res.status(200).json(updatedPost);
   } catch (err) {
@@ -192,7 +187,7 @@ const commentPost = async (req, res) => {
     {
       new: true,
     }
-  ).sort({ createdAt: -1 });
+  );
 
   res.json(updatedPost);
 };

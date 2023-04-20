@@ -9,6 +9,7 @@ import FileBase from "react-file-base64";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getPostID } from "../../../reducers/posts";
+import CityInput from "../cityInput";
 
 const MemoryCreater = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const MemoryCreater = () => {
 
   // On Submit
   const onSubmit = (data) => {
-    toast.success("You add your Memory", {
+    toast.success("You added your Memory", {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -46,7 +47,11 @@ const MemoryCreater = () => {
     });
 
     if (id) {
-      dispatch(updatePosts(id, data));
+      const newData = {
+        ...post, // start with the current post data
+        ...data, // add new data to replace the old values
+      };
+      dispatch(updatePosts(id, newData));
     } else {
       dispatch(createPosts(data));
     }
@@ -55,14 +60,23 @@ const MemoryCreater = () => {
 
   const clearAll = () => {
     dispatch(getPostID(null));
-    reset();
+    reset({
+      title: "",
+      message: "",
+      tags: "",
+      location: "",
+      date: "",
+      pictures: "",
+    });
+    setValue("location", {});
   };
 
   useEffect(() => {
     if (post) {
       reset(post);
+      setValue("location", post?.location);
     }
-  }, [dispatch, id, post, reset, register]);
+  }, [dispatch, id, post, reset, setValue]);
 
   return (
     <Paper
@@ -72,6 +86,7 @@ const MemoryCreater = () => {
         flexDirection: "column",
         m: "1.5rem",
         padding: "1.5rem",
+        zIndex: 20,
       }}
     >
       <form
@@ -91,7 +106,6 @@ const MemoryCreater = () => {
           label="Title"
           error={!!errors?.title?.type}
           {...register("title")}
-          // value={}
         />
         {errors?.title?.type === "required" && (
           <Typography variant="p" sx={{ color: "red", width: "100%" }}>
@@ -127,7 +141,6 @@ const MemoryCreater = () => {
         <Box display="flex" flexDirection="row" gap="1rem">
           <Box>
             <TextField
-              sx={{ width: "100%" }}
               name="tags"
               variant="outlined"
               label="Tags"
@@ -141,14 +154,7 @@ const MemoryCreater = () => {
             )}
           </Box>
           <Box>
-            <TextField
-              sx={{ width: "100%" }}
-              name="location"
-              variant="outlined"
-              label="Location"
-              error={!!errors?.location?.type}
-              {...register("location")}
-            />
+            <CityInput setValue={setValue} />
             {errors?.location?.type === "required" && (
               <Typography variant="p" sx={{ color: "red", width: "100%" }}>
                 {errors.location.message}
@@ -161,7 +167,7 @@ const MemoryCreater = () => {
           type="date"
           name="date"
           variant="outlined"
-          error={!!errors?.location?.type}
+          error={!!errors?.date?.type}
           {...register("date")}
         />
         {errors?.date?.type === "required" && (

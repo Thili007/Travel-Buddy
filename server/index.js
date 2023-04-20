@@ -8,6 +8,7 @@ import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
 import postsRoutes from "./routes/postsRoutes.js";
 import tripRoutes from "./routes/tripsRoutes.js";
+import cityDetailsRoutes from "./routes/cityDetailsRoutes.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -32,6 +33,7 @@ app.use("/images", express.static(path.join(__dirname, "/images")));
 app.use("/api/user", userRoutes);
 app.use("/api/user", postsRoutes);
 app.use("/api/user", tripRoutes);
+app.use("/api/user", cityDetailsRoutes);
 
 const port = process.env.PORT || 5000;
 const db = process.env.MONGO_DB;

@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 
 import LandingPage from "./pages/landingPage/LandingPage";
 
-
 const App = () => {
   const mode = useSelector((state) => state.changeMode.mode);
 

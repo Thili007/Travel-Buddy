@@ -7,7 +7,7 @@ export const MemorySchema = yup
       .string()
       .required("Please add Nice Description about Your Memory"),
     tags: yup.string().required("Please add  at least one Tag"),
-    location: yup.string().required("Please add location to know"),
+    location: yup.object().required("Please add location to know"),
     date: yup.date().required("Please add  Date"),
   })
   .required();

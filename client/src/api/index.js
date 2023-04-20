@@ -73,3 +73,10 @@ export const getUserPosts = async () => {
   });
   return data;
 };
+
+// To get all city details
+
+export const getCityDetails = async () => {
+  const data = await axios.post(`${url}/getAllCities`);
+  return data;
+};
