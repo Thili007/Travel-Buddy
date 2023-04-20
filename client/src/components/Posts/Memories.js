@@ -59,8 +59,6 @@ const Memories = () => {
   const posts = useSelector((state) => state.posts.posts);
   const [setLikes] = useState(null);
 
-  console.log("Memory Posts", posts);
-
   const handlePostSettingsOpen = (postId, event) => {
     setPostSettings((prev) => new Map(prev).set(postId, event.currentTarget));
   };

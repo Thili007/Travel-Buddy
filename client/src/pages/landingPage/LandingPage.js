@@ -14,6 +14,7 @@ const CoverBg = () => {
       <div className="bgLayer">
         <video src={BgVideo} autoPlay loop muted className="video" />
         <div className="contain background-btn">
+          <h1 className="color:red">Travel Buddy</h1>
           <button className="button-53" onClick={() => setLoginModal(true)}>
             Login
           </button>

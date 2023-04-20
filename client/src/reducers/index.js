@@ -5,6 +5,7 @@ import cities from "./cityDetails";
 import displayPages from "./displayPages";
 import pageLoader from "./pageLoader";
 import changeMode from "./mode";
+import isAuth from "./isAuth";
 
 export default combineReducers({
   posts,
@@ -12,4 +13,5 @@ export default combineReducers({
   cities,
   pageLoader,
   changeMode,
+  isAuth,
 });

@@ -147,9 +147,9 @@ const updatePosts = async (req, res) => {
 const likePost = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log("post id", req.params.id);
+
     const { userId } = req.body;
-    console.log("userId", req.body);
+
     const post = await UserPosts.findById(id);
     const isLiked = post.likes.indexOf(userId);
 
@@ -166,8 +166,6 @@ const likePost = async (req, res) => {
       { likes: post.likes },
       { new: true }
     );
-
-    console.log("updated post", updatedPost);
 
     return res.status(200).json(updatedPost);
   } catch (err) {

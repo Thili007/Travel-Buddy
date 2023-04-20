@@ -12,13 +12,11 @@ export const getCityDetails = async (req, res) => {
     const collection = database.collection("city-details");
 
     const userInput = req.query.input;
-    console.log("userInput", userInput);
 
     const cities = await collection
       .find({ city: { $regex: `^${userInput}`, $options: "i" } })
       .toArray();
 
-    console.log("cities", cities);
     return res.status(200).json(cities);
   } catch (err) {
     console.error(err);

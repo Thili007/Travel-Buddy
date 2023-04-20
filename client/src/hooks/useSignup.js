@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useUserContext } from "./useUserContext";
+import { useDispatch } from "react-redux";
+import { setIsAuth } from "../reducers/isAuth";
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
-  const { dispatch } = useUserContext();
+  const { dispatch: dispatchUserContext } = useUserContext();
+  const dispatch = useDispatch();
 
   const signUp = async (userName, email, password) => {
     setIsLoading(true);
@@ -28,8 +31,9 @@ export const useSignup = () => {
       localStorage.setItem("USER_DETAILS", JSON.stringify(json.userDetails));
       localStorage.setItem("TOKEN", JSON.stringify(json.token));
       localStorage.setItem("USER_ID", JSON.stringify(json.userDetails._id));
+      dispatch(setIsAuth(true));
 
-      dispatch({ type: "LOGIN", payload: json });
+      dispatchUserContext({ type: "LOGIN", payload: json });
       setIsLoading(false);
     }
   };

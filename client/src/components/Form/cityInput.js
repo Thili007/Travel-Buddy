@@ -16,7 +16,7 @@ const CityInput = ({ setValue }) => {
     post ? post?.location?.city : ""
   );
   const [suggestions, setSuggestions] = useState([]);
-  console.log("searchInput", searchInput);
+
   useEffect(() => {
     const fetchSuggestions = async () => {
       axios
@@ -43,7 +43,7 @@ const CityInput = ({ setValue }) => {
 
   const handleSelect = (event, selectedCity) => {
     setSearchInput("");
-    console.log("selectedCity", selectedCity);
+
     setValue("location", selectedCity);
   };
 

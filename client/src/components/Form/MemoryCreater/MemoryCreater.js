@@ -21,8 +21,6 @@ const MemoryCreater = () => {
       : null
   );
 
-  console.log("selected post", post);
-
   // React Hook Form
   const {
     register,
@@ -37,7 +35,6 @@ const MemoryCreater = () => {
 
   // On Submit
   const onSubmit = (data) => {
-    console.log("data", data);
     toast.success("You added your Memory", {
       position: "top-right",
       autoClose: 3000,
