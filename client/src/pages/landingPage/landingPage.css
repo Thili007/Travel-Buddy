@@ -150,3 +150,63 @@
   color: #d85f37;
   font-size: 26px;
 }
+
+/* Animations CSS */
+
+.wrapper {
+  display: flex;
+  position: absolute;
+  top: 240px;
+  right: 150px;
+}
+.wrapper .static-txt {
+  color: #fff;
+  font-size: 60px;
+  font-weight: 400;
+}
+.wrapper .dynamic-txts {
+  margin-left: 15px;
+  padding: 5px;
+  height: 90px;
+  overflow: hidden;
+}
+.dynamic-txts li {
+  list-style: none;
+  line-height: 75px;
+  height: 103px;
+  color: #face30;
+  font-size: 95px;
+  font-weight: 500;
+  position: relative;
+  top: 0;
+  padding: 0 20px;
+  animation: slide 20s steps(4) infinite;
+}
+@keyframes slide {
+  100% {
+    top: -400px;
+  }
+}
+/* s */
+.dynamic-txts li span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 84%;
+  width: 400%;
+  background: #111;
+  border-left: 2px solid #face30;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(30px) brightness(100%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  animation: typing 5s steps(7) infinite;
+}
+@keyframes typing {
+  40%,
+  60% {
+    left: calc(120% + 60px);
+  }
+  100% {
+    left: 0;
+  }
+}
