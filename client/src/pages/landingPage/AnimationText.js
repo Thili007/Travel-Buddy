@@ -9,7 +9,7 @@ export const AnimationText = () => {
           <span>Welcome To Travel Buddy</span>
         </li>
         <li>
-          <span>Plan Trip</span>
+          <span>Plan Trips</span>
         </li>
         <li>
           <span>Make New Friends</span>
