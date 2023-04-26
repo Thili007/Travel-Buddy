@@ -20,10 +20,9 @@ Travel Buddy has several features that make it a unique and valuable tool for tr
 To get started with Travel Buddy, you will need to have Node.js and MongoDB installed on your computer. You can follow the steps below to clone the repository and run the application:
 
 <ol>
-
 <li>Clone the repository to your local machine: git clone https://github.com/travelbuddy/travel-buddy.git</li>
-<li>Change directory to the client folder: cd client</li>
-<li>Install the required packages: npm install</li>
+<li>Change directory to the client folder: `cd client`</li>
+<li>Install the required packages: `npm install</li>
 <li>Start the client application: npm start</li>
 <li>Open a new terminal window and change directory to the server folder: cd ../server</li>
 <li>Install the required packages: npm install</li>
