@@ -15,23 +15,32 @@ Travel Buddy has several features that make it a unique and valuable tool for tr
 - Travel planning: Users can create and join travel plans, where they can coordinate with others and share trip details and photos.
 - Real-time messaging: Users can communicate with each other in real-time through a messaging system built with Socket.IO.
 
-<h2>Getting started<h2>
+<h2>Getting Started</h2>
 
-To get started with Travel Buddy, you will need to have Node.js and MongoDB installed on your computer. You can then clone this repository and run the following commands:
+To get started with Travel Buddy, you will need to have Node.js and MongoDB installed on your computer. You can follow the steps below to clone the repository and run the application:
 
-<h3>Client:<h3>
-cd client
-npm install
-npm start
-bash
+<ol>
 
-<h3>Server:<h3>
-cd server
-npm install
-npm start
+<li>Clone the repository to your local machine: git clone https://github.com/travelbuddy/travel-buddy.git</li>
+<li>Change directory to the client folder: cd client</li>
+<li>Install the required packages: npm install</li>
+<li>Start the client application: npm start</li>
+<li>Open a new terminal window and change directory to the server folder: cd ../server</li>
+<li>Install the required packages: npm install</li>
+<li>Start the server application: npm start</li>
+<li>Access the app at http://localhost:3000</li>
+</ol>
 
-This will start the client and server applications on your local machine, and you can then access the app at http://localhost:3000.
 
-<h2>Contributing<h2>
+<h2>Contributing</h2>
 
-We welcome contributions to this project! If you would like to contribute, please fork the repository and create a pull request with your changes.
+<p>We welcome contributions to this project! If you would like to contribute, please follow these steps:</p>
+<ol>
+<li>Fork the repository to your own account</li>
+<li>Create a new branch for your changes: git checkout -b my-feature-branch</li>
+<li>Make your changes and commit them: git commit -m "Add a new feature"</li>
+<li>Push your changes to your fork: git push origin my-feature-branch</li>
+<li>Create a pull request from your fork to the main repository</li>
+</ol>
+
+<p>We will review your changes and merge them into the main branch if they meet our quality standards.</p>
